@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "184908286901",
+    "firebase_url": "https://sir-giles.firebaseio.com",
+    "project_id": "sir-giles",
+    "storage_bucket": "sir-giles.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:184908286901:android:9bc68bb6a26a188c6d27fc",
+        "android_client_info": {
+          "package_name": "com.example.sir_giles_brewing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "184908286901-573bbqbjvjjtbe08e4288ncqgf2jn31q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwgWhsEWMFpDKBVwGvva57lZu7u4CJsEs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "184908286901-573bbqbjvjjtbe08e4288ncqgf2jn31q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
