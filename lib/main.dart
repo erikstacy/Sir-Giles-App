@@ -20,6 +20,11 @@ class MyApp extends StatelessWidget {
         routes: {
           MainScreen.id: (context) => MainScreen(),
         },
+        theme: ThemeData(
+          appBarTheme: AppBarTheme(
+            color: Colors.blue[900],
+          ),
+        ),
       ),
     );
   }
