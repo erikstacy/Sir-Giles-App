@@ -14,74 +14,37 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
 
   List<Beer> beerList;
-  List<Beer> searchList;
-  bool isFirst;
-
-  @override
-  void initState() {
-    super.initState();
-
-    isFirst = true;
-  }
-
   @override
   Widget build(BuildContext context) {
 
     beerList = Provider.of<List<Beer>>(context);
-    if (isFirst) {
-      searchList = beerList;
-      isFirst = false;
-    }
 
     if (beerList != null) {
 
-      searchList.sort((a, b) => a.name.compareTo(b.name));
+      beerList.sort((a, b) => a.name.compareTo(b.name));
 
       return Scaffold(
         backgroundColor: Colors.grey[300],
         appBar: AppBar(
           title: Text('Sir Giles Brewing'),
           centerTitle: true,
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {
+                showSearch(context: context, delegate: DataSearch());
+              },
+            ),
+          ],
         ),
         body: Column(
           children: <Widget>[
             SizedBox(height: 10,),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 30),
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(30),
-              ),
-              child: TextField(
-                onChanged: (value) {
-                  List<Beer> tempList = [];
-                  for (Beer beer in beerList) {
-                    if (beer.name == value) {
-                      tempList.add(beer);
-                    }
-                  }
-
-                  setState(() {
-                    searchList = tempList;
-                  });
-                },
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  hintText: "Search by name, type, or abbreviation",
-                  hintStyle: TextStyle(fontSize: 14, color: Colors.grey[700],),
-                ),
-                style: TextStyle(
-                  fontSize: 14,
-                ),
-              ),
-            ),
-            SizedBox(height: 10,),
             Expanded(
               child: ListView.builder(
-                itemCount: searchList.length,
+                itemCount: beerList.length,
                 itemBuilder: (context, index) {
-                  return BeerCard(beer: searchList[index],);
+                  return BeerCard(beer: beerList[index],);
                 },
               ),
             ),
@@ -99,6 +62,67 @@ class _MainScreenState extends State<MainScreen> {
       );
     }
   }
+}
+
+/*
+* DataSearch class
+********************************************/
+class DataSearch extends SearchDelegate<String> {
+
+  List<Beer> beerList;
+  
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    // Actions for app bar
+    return [
+      IconButton(
+        icon: Icon(Icons.clear),
+        onPressed: () {
+          query = "";
+        },
+      ),
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    // Leading icon on the left of the app bar
+    return IconButton(
+      icon: AnimatedIcon(
+        icon: AnimatedIcons.menu_arrow,
+        progress: transitionAnimation,
+      ),
+      onPressed: () {
+        close(context, null);
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    // Show some result based on the selection
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    // Show when someone searches for something
+    beerList = Provider.of<List<Beer>>(context);
+
+    final suggestionList = query.isEmpty ? [] : beerList.where((p) {
+      return p.name.toLowerCase().startsWith(query.toLowerCase()) || p.abbreviation.toLowerCase().startsWith(query.toLowerCase()) || p.type.toLowerCase().startsWith(query.toLowerCase());
+    }).toList();
+
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      child: ListView.builder(
+        itemCount: suggestionList.length,
+        itemBuilder: (context, index) {
+          return BeerCard(beer: suggestionList[index],);
+        },
+      ),
+    );
+  }
+
 }
 
 class BeerCard extends StatelessWidget {
