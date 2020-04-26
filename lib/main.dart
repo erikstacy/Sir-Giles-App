@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sir_giles_brewing/screens/beer_screen.dart';
 import 'package:sir_giles_brewing/screens/main_screen.dart';
 import 'package:sir_giles_brewing/services/globals.dart';
 import 'package:sir_giles_brewing/services/models.dart';
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
         initialRoute: MainScreen.id,
         routes: {
           MainScreen.id: (context) => MainScreen(),
+          BeerScreen.id: (context) => BeerScreen(),
         },
         theme: ThemeData(
           appBarTheme: AppBarTheme(

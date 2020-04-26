@@ -10,4 +10,13 @@ class CustomTheme {
     fontSize: 14,
   );
 
+  static TextStyle beerTitleText = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+  );
+  
+  static TextStyle beerSubText = TextStyle(
+    fontSize: 20,
+  );
+
 }
